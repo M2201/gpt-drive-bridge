@@ -19,7 +19,7 @@ oauth2Client.setCredentials({
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
 app.get('/list-files', async (req, res) => {
-  console.log("📥 /list-files route was hit");
+  console.log("/list-files route was hit");
 
   try {
     const folderId = process.env.FOLDER_ID;
