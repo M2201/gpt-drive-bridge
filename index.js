@@ -12,10 +12,13 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
-// Add your refresh token here after generating it
 oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN
 });
+
+// ✅ This line defines "drive" so it can be used later
+const drive = google.drive({ version: 'v3', auth: oauth2Client });
+
 app.get('/list-files', async (req, res) => {
   console.log("📥 /list-files route was hit");
 
@@ -32,18 +35,3 @@ app.get('/list-files', async (req, res) => {
     res.status(500).send('Failed to fetch files');
   }
 });
-
-app.get('/file/:id', async (req, res) => {
-  try {
-    const fileId = req.params.id;
-    const file = await drive.files.get(
-      { fileId, alt: 'media' },
-      { responseType: 'stream' }
-    );
-    file.data.pipe(res);
-  } catch (err) {
-    res.status(500).send('Failed to fetch file.');
-  }
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
