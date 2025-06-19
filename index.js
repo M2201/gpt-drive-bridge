@@ -16,7 +16,6 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN
 });
 
-// ✅ This line defines "drive" so it can be used later
 const drive = google.drive({ version: 'v3', auth: oauth2Client });
 
 app.get('/list-files', async (req, res) => {
